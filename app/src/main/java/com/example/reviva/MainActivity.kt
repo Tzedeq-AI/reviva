@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             splashScreen.setOnExitAnimationListener { splashView ->
                 splashView.view.animate()
                     .alpha(0f)
-                    .setDuration(100)
+                    .setDuration(250)
                     .withEndAction {
                         splashView.remove()
                     }
