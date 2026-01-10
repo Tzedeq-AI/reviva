@@ -1,4 +1,4 @@
-package com.example.reviva
+package com.example.reviva.presentation.main
 
 import android.os.Build
 import android.os.Bundle
