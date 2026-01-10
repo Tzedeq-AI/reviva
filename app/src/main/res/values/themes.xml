@@ -1,15 +1,24 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+
+    <!-- App theme (used after splash) -->
     <style name="Base.Theme.Reviva" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Clean app background after splash -->
+        <item name="android:windowBackground">@color/screen_background</item>
     </style>
 
     <style name="Theme.Reviva" parent="Base.Theme.Reviva" />
 
+    <!-- Splash theme -->
     <style name="Theme.App.SplashScreen" parent="Theme.SplashScreen">
+
+        <!-- Fallback splash for Android 11 and below -->
+        <item name="android:windowBackground">@drawable/splash_background</item>
+
+        <!-- Android 12+ system splash -->
         <item name="windowSplashScreenBackground">@color/white</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/reviva_white</item>
         <item name="postSplashScreenTheme">@style/Base.Theme.Reviva</item>
+
     </style>
+
 </resources>

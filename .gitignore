@@ -29,3 +29,5 @@ Thumbs.db
 # Keystore (very important)
 *.jks
 *.keystore
+
+copier.py
