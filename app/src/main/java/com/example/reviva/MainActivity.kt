@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         val splashScreen = installSplashScreen()
         val startTime = SystemClock.elapsedRealtime()
 
-        // Keep splash visible for at least 1400ms (Android 12+ only)
+        // Keep splash visible for at least 1400ms on all supported Android versions
         splashScreen.setKeepOnScreenCondition {
             SystemClock.elapsedRealtime() - startTime < 1400
         }
