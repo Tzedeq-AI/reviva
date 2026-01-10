@@ -11,14 +11,20 @@ import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        // Minimum time to keep the splash screen visible so the brand is seen
+        // and the transition does not appear as a flicker on fast devices.
+        private const val MIN_SPLASH_DURATION_MS: Long = 1400L
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         val splashScreen = installSplashScreen()
         val startTime = SystemClock.elapsedRealtime()
 
-        // Keep splash visible for at least 1400ms on all supported Android versions
+        // Keep splash visible for at least MIN_SPLASH_DURATION_MS (Android 12+ only)
         splashScreen.setKeepOnScreenCondition {
-            SystemClock.elapsedRealtime() - startTime < 1400
+            SystemClock.elapsedRealtime() - startTime < MIN_SPLASH_DURATION_MS
         }
 
         // Fade out only on Android 12+
