@@ -1,6 +1,8 @@
 package com.example.reviva
 
+import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -11,18 +13,25 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        // Install Android 12+ splash before anything else
         val splashScreen = installSplashScreen()
+        val startTime = SystemClock.elapsedRealtime()
 
-        // Optional: subtle fade-out when splash exits
-        splashScreen.setOnExitAnimationListener { splashView ->
-            splashView.view.animate()
-                .alpha(0f)
-                .setDuration(300)
-                .withEndAction {
-                    splashView.remove()
-                }
-                .start()
+        // Keep splash visible for at least 2000ms (Android 12+ only)
+        splashScreen.setKeepOnScreenCondition {
+            SystemClock.elapsedRealtime() - startTime <1400
+        }
+
+        // Fade out only on Android 12+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            splashScreen.setOnExitAnimationListener { splashView ->
+                splashView.view.animate()
+                    .alpha(0f)
+                    .setDuration(100)
+                    .withEndAction {
+                        splashView.remove()
+                    }
+                    .start()
+            }
         }
 
         super.onCreate(savedInstanceState)
