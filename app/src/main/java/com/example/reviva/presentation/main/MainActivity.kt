@@ -1,4 +1,4 @@
-package com.example.reviva
+package com.example.reviva.presentation.main
 
 import android.os.Build
 import android.os.Bundle
@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.reviva.R
 
 class MainActivity : AppCompatActivity() {
 
