@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/app_nav_graph"
+    app:startDestination="@id/splashFragment">
+
+    <!-- Splash -->
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.reviva.presentation.splash.SplashFragment"
+        android:label="Splash">
+        <action
+            android:id="@+id/action_splash_to_onboarding1"
+            app:destination="@id/onboarding1Fragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+    <!-- Onboarding -->
+    <fragment
+        android:id="@+id/onboarding1Fragment"
+        android:name="com.example.reviva.presentation.onboarding.Onboarding1Fragment"
+        android:label="Onboarding 1">
+        <action
+            android:id="@+id/action_onboarding1_to_onboarding2"
+            app:destination="@id/onboarding2Fragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/onboarding2Fragment"
+        android:name="com.example.reviva.presentation.onboarding.Onboarding2Fragment"
+        android:label="Onboarding 2">
+        <action
+            android:id="@+id/action_onboarding2_to_onboarding3"
+            app:destination="@id/onboarding3Fragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/onboarding3Fragment"
+        android:name="com.example.reviva.presentation.onboarding.Onboarding3Fragment"
+        android:label="Onboarding 3">
+        <action
+            android:id="@+id/action_onboarding3_to_permissions"
+            app:destination="@id/permissionsFragment"/>
+    </fragment>
+
+    <!-- Permissions -->
+    <fragment
+        android:id="@+id/permissionsFragment"
+        android:name="com.example.reviva.presentation.permissions.PermissionsFragment"
+        android:label="Permissions">
+        <action
+            android:id="@+id/action_permissions_to_home"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+    <!-- Home -->
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.reviva.presentation.home.HomeFragment"
+        android:label="Home">
+        <action
+            android:id="@+id/action_home_to_camera"
+            app:destination="@id/liveScanFragment"/>
+        <action
+            android:id="@+id/action_home_to_gallery"
+            app:destination="@id/galleryFragment"/>
+        <action
+            android:id="@+id/action_home_to_settings"
+            app:destination="@id/settingsFragment"/>
+    </fragment>
+
+    <!-- Camera flow -->
+    <fragment
+        android:id="@+id/liveScanFragment"
+        android:name="com.example.reviva.presentation.camera.LiveScanFragment"
+        android:label="Live Scan">
+        <action
+            android:id="@+id/action_camera_to_review"
+            app:destination="@id/scanReviewFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/scanReviewFragment"
+        android:name="com.example.reviva.presentation.review.ScanReviewFragment"
+        android:label="Scan Review">
+        <action
+            android:id="@+id/action_review_to_processing"
+            app:destination="@id/processingFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/processingFragment"
+        android:name="com.example.reviva.presentation.processing.ProcessingFragment"
+        android:label="Processing">
+        <action
+            android:id="@+id/action_processing_to_results"
+            app:destination="@id/resultsFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/resultsFragment"
+        android:name="com.example.reviva.presentation.results.ResultsFragment"
+        android:label="Results">
+        <action
+            android:id="@+id/action_results_to_save"
+            app:destination="@id/saveOrganizeFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/saveOrganizeFragment"
+        android:name="com.example.reviva.presentation.save.SaveOrganizeFragment"
+        android:label="Save &amp; Organize">
+        <action
+            android:id="@+id/action_save_to_home"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+    <!-- Gallery -->
+    <fragment
+        android:id="@+id/galleryFragment"
+        android:name="com.example.reviva.presentation.gallery.GalleryFragment"
+        android:label="Gallery">
+        <action
+            android:id="@+id/action_gallery_to_detail"
+            app:destination="@id/photoDetailFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/photoDetailFragment"
+        android:name="com.example.reviva.presentation.gallery.PhotoDetailFragment"
+        android:label="Photo Detail"/>
+
+    <!-- Settings -->
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.reviva.presentation.settings.SettingsFragment"
+        android:label="Settings">
+        <action
+            android:id="@+id/action_settings_to_about"
+            app:destination="@id/aboutFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.example.reviva.presentation.about.AboutFragment"
+        android:label="About"/>
+
+</navigation>
