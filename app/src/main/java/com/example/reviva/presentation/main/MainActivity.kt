@@ -1,14 +1,10 @@
-package com.example.reviva
+package com.example.reviva.presentation.main
 
-import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.reviva.onboarding.ViewPagerFragment
+import com.example.reviva.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,32 +21,7 @@ class MainActivity : AppCompatActivity() {
             SystemClock.elapsedRealtime() - startTime < MIN_SPLASH_DURATION_MS
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            splashScreen.setOnExitAnimationListener { splashView ->
-                splashView.view.animate()
-                    .alpha(0f)
-                    .setDuration(250)
-                    .withEndAction { splashView.remove() }
-                    .start()
-            }
-        }
-
         super.onCreate(savedInstanceState)
-
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-
-        // Load onboarding fragment
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, ViewPagerFragment())
-                .commit()
-        }
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
     }
 }
