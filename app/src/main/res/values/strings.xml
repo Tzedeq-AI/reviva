@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Reviva</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="onboarding1">Onboarding illustration: capture multiple photos</string>
+    <string name="capture_multiple_photos_at_once">Capture multiple photos at Once</string>
+    <string name="skip">Skip</string>
+    <string name="auto_crop_and_enhance_with_ai">Auto crop and enhance with AI</string>
+    <string name="save_and_organize_instantly">Save and organize instantly</string>
 </resources>
