@@ -2,8 +2,18 @@
 
     <!-- App theme (used after splash) -->
     <style name="Base.Theme.Reviva" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Clean app background after splash -->
+
+        <!-- App background -->
         <item name="android:windowBackground">@color/screen_background</item>
+
+        <!-- Status + navigation bar -->
+        <item name="android:statusBarColor">@color/black</item>
+        <item name="android:navigationBarColor">@color/black</item>
+
+        <!-- White icons off (dark UI) -->
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+
     </style>
 
     <style name="Theme.Reviva" parent="Base.Theme.Reviva" />
@@ -11,10 +21,10 @@
     <!-- Splash theme -->
     <style name="Theme.App.SplashScreen" parent="Theme.SplashScreen">
 
-        <!-- Fallback splash for Android 11 and below -->
+        <!-- Android 11 and below -->
         <item name="android:windowBackground">@drawable/splash_background</item>
 
-        <!-- Android 12+ system splash -->
+        <!-- Android 12+ splash -->
         <item name="windowSplashScreenBackground">@color/white</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/reviva_white</item>
         <item name="postSplashScreenTheme">@style/Base.Theme.Reviva</item>
