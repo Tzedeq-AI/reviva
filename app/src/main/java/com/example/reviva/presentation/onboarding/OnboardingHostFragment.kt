@@ -12,24 +12,47 @@ import com.google.android.material.tabs.TabLayoutMediator
 class OnboardingHostFragment : Fragment(R.layout.fragment_onboarding_host) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         val pager = view.findViewById<ViewPager2>(R.id.viewPager)
         val dots = view.findViewById<TabLayout>(R.id.dots)
         val skip = view.findViewById<View>(R.id.skipBtn)
         val next = view.findViewById<View>(R.id.nextBtn)
 
         pager.adapter = OnboardingPagerAdapter(this)
+        pager.setPageTransformer(FadeSlideTransformer())
 
         TabLayoutMediator(dots, pager) { _, _ -> }.attach()
 
-        pager.setPageTransformer(FadeSlideTransformer())
+        // Change button text and skip visibility
+        pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                if (position == 2) {
+                    (next as? com.google.android.material.button.MaterialButton)
+                        ?.setText(R.string.get_started)
+                    skip.visibility = View.INVISIBLE
+                } else {
+                    (next as? com.google.android.material.button.MaterialButton)
+                        ?.setText(R.string.next)
+                    skip.visibility = View.VISIBLE
+                }
+            }
+        })
 
         skip.setOnClickListener {
-            findNavController().navigate(R.id.action_onboarding_to_permissions)
+            if (isAdded) {
+                findNavController().navigate(R.id.action_onboarding_to_permissions)
+            }
         }
 
         next.setOnClickListener {
-            if (pager.currentItem < 2) pager.currentItem++
-            else findNavController().navigate(R.id.action_onboarding_to_permissions)
+            if (pager.currentItem < 2) {
+                pager.currentItem++
+            } else {
+                if (isAdded) {
+                    findNavController().navigate(R.id.action_onboarding_to_permissions)
+                }
+            }
         }
     }
 }

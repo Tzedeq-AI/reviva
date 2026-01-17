@@ -22,7 +22,10 @@ class SplashFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         view.postDelayed({
-            findNavController().navigate(R.id.action_splash_to_onboarding)
+            if (isAdded) {
+                findNavController().navigate(R.id.action_splash_to_onboarding)
+            }
         }, 800)
+
     }
 }
