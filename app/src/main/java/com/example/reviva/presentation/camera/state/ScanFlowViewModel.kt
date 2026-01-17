@@ -1,28 +1,20 @@
 package com.example.reviva.presentation.camera.state
 
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import com.example.reviva.domain.repository.ScanRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ScanFlowViewModel : ViewModel() {
+@HiltViewModel
+class ScanFlowViewModel @Inject constructor(
+    private val repository: ScanRepository
+) : ViewModel() {
 
-    private val _capturedCount = MutableStateFlow(0)
-    val capturedCount: StateFlow<Int> = _capturedCount.asStateFlow()
+    val scanSession = repository.scanSession
 
-    private val _status = MutableStateFlow("Idle")
-    val status: StateFlow<String> = _status.asStateFlow()
+    fun incrementCaptured() = repository.incrementCaptured()
 
-    fun incrementCaptured() {
-        _capturedCount.value += 1
-    }
+    fun setStatus(status: String) = repository.setStatus(status)
 
-    fun setStatus(newStatus: String) {
-        _status.value = newStatus
-    }
-
-    fun reset() {
-        _capturedCount.value = 0
-        _status.value = "Idle"
-    }
+    fun reset() = repository.reset()
 }

@@ -6,13 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import com.example.reviva.presentation.camera.state.ScanFlowViewModel
 import com.example.reviva.R
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ScanReviewFragment : Fragment() {
-    private val scanViewModel: ScanFlowViewModel by navGraphViewModels(R.id.app_nav_graph)
+
+    private val scanViewModel: ScanFlowViewModel
+            by hiltNavGraphViewModels(R.id.app_nav_graph)
 
     override fun onCreateView(
         inflater: LayoutInflater,

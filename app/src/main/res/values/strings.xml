@@ -6,4 +6,6 @@
     <string name="skip">Skip</string>
     <string name="onboarding2">Auto crop and enhance with AI</string>
     <string name="onboarding3">Save and organize instantly</string>
+    <string name="next">Next</string>
+    <string name="get_started">Get Started</string>
 </resources>
