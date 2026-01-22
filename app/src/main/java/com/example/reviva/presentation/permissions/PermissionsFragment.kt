@@ -25,17 +25,21 @@ class PermissionsFragment : Fragment() {
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
             val cameraGranted = permissions[Manifest.permission.CAMERA] ?: false
-            val galleryGranted = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                permissions[Manifest.permission.READ_MEDIA_IMAGES] ?: false
-            } else {
-                permissions[Manifest.permission.READ_EXTERNAL_STORAGE] ?: false
+
+            val galleryGranted = when {
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> {
+                    permissions[Manifest.permission.READ_MEDIA_IMAGES] ?: false
+                }
+                else -> {
+                    permissions[Manifest.permission.READ_EXTERNAL_STORAGE] ?: false
+                }
             }
 
             if (cameraGranted && galleryGranted) {
-                // ✅ Navigate if granted
+                // Navigate if granted
                 findNavController().navigate(R.id.action_permissions_to_home)
             } else {
-                // ❌ Denied
+                // Denied
                 hasAskedOnce = true
                 Toast.makeText(requireContext(), "Permissions denied", Toast.LENGTH_SHORT).show()
             }
@@ -76,31 +80,35 @@ class PermissionsFragment : Fragment() {
         } else {
             val showRationale = permissions.any { shouldShowRequestPermissionRationale(it) }
 
-            if (showRationale) {
-                // User denied once → show rationale
-                AlertDialog.Builder(requireContext())
-                    .setTitle("Permissions Required")
-                    .setMessage("We need Camera and Gallery access to continue. Please grant them.")
-                    .setPositiveButton("OK") { _, _ ->
-                        requestPermissionLauncher.launch(permissions)
-                    }
-                    .setNegativeButton("Cancel", null)
-                    .show()
-            } else if (hasAskedOnce) {
-                // Permanent denial → guide to Settings
-                AlertDialog.Builder(requireContext())
-                    .setTitle("Permissions Permanently Denied")
-                    .setMessage("Please enable permissions in Settings to continue.")
-                    .setPositiveButton("Open Settings") { _, _ ->
-                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                        intent.data = Uri.fromParts("package", requireContext().packageName, null)
-                        startActivity(intent)
-                    }
-                    .setNegativeButton("Cancel", null)
-                    .show()
-            } else {
-                // First time asking → just request
-                requestPermissionLauncher.launch(permissions)
+            when {
+                showRationale -> {
+                    // User denied once → show rationale
+                    AlertDialog.Builder(requireContext())
+                        .setTitle("Permissions Required")
+                        .setMessage("We need Camera and Gallery access to continue. Please grant them.")
+                        .setPositiveButton("OK") { _, _ ->
+                            requestPermissionLauncher.launch(permissions)
+                        }
+                        .setNegativeButton("Cancel", null)
+                        .show()
+                }
+                hasAskedOnce -> {
+                    // Permanent denial → guide to Settings
+                    AlertDialog.Builder(requireContext())
+                        .setTitle("Permissions Permanently Denied")
+                        .setMessage("Please enable permissions in Settings to continue.")
+                        .setPositiveButton("Open Settings") { _, _ ->
+                            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                            intent.data = Uri.fromParts("package", requireContext().packageName, null)
+                            startActivity(intent)
+                        }
+                        .setNegativeButton("Cancel", null)
+                        .show()
+                }
+                else -> {
+                    // First time asking → just request
+                    requestPermissionLauncher.launch(permissions)
+                }
             }
         }
     }
