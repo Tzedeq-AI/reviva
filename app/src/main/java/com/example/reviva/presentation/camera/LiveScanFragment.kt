@@ -26,19 +26,15 @@ class LiveScanFragment : Fragment(R.layout.frag_livescan) {
     private val scanViewModel: ScanFlowViewModel
             by hiltNavGraphViewModels(R.id.app_nav_graph)
 
-    private lateinit var analysisExecutor: ExecutorService
+    private var analysisExecutor: ExecutorService? = null
 
     private lateinit var previewView: PreviewView
     private lateinit var overlay: OverlayView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        analysisExecutor = Executors.newSingleThreadExecutor()
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
-        analysisExecutor.shutdown()
+        analysisExecutor?.shutdown()
+        analysisExecutor = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,6 +42,11 @@ class LiveScanFragment : Fragment(R.layout.frag_livescan) {
 
         previewView = view.findViewById(R.id.previewView)
         overlay = view.findViewById(R.id.overlay)
+
+        // Create executor for this view lifecycle
+        if (analysisExecutor == null || analysisExecutor?.isShutdown == true) {
+            analysisExecutor = Executors.newSingleThreadExecutor()
+        }
 
         scanViewModel.setStatus("Scanning")
 
@@ -72,6 +73,7 @@ class LiveScanFragment : Fragment(R.layout.frag_livescan) {
 
     @SuppressLint("UnsafeOptInUsageError")
     private fun bindCameraUseCases(cameraProvider: ProcessCameraProvider) {
+        val executor = analysisExecutor ?: return
 
         val rotation = previewView.display?.rotation ?: Surface.ROTATION_0
 
@@ -96,7 +98,7 @@ class LiveScanFragment : Fragment(R.layout.frag_livescan) {
             .build()
 
 
-        imageAnalysis.setAnalyzer(analysisExecutor) { imageProxy ->
+        imageAnalysis.setAnalyzer(executor) { imageProxy ->
             try {
                 val bitmap: Bitmap? = ImageUtils.imageProxyToBitmap(imageProxy)
 
