@@ -20,6 +20,7 @@ object ImageUtils {
                 BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
             }
         } catch (e: Exception) {
+            android.util.Log.e("ImageUtils", "imageProxyToBitmap failed", e)
             null
         }
     }
@@ -55,6 +56,7 @@ object ImageUtils {
             BitmapFactory.decodeByteArray(jpegBytes, 0, jpegBytes.size)
 
         } catch (e: Exception) {
+            android.util.Log.e("ImageUtils", "yuvToBitmap failed", e)
             null
         }
     }

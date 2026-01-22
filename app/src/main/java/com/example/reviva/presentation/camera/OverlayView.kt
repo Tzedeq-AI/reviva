@@ -13,19 +13,14 @@ class OverlayView @JvmOverloads constructor(
 
     data class Box(val left: Float, val top: Float, val right: Float, val bottom: Float)
 
-    private val paint = Paint().apply {
+    private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeWidth = resources.displayMetrics.density * 2f   // ~2dp
-        isAntiAlias = true
         strokeCap = Paint.Cap.ROUND
         strokeJoin = Paint.Join.ROUND
-        // Use color resource to match theme
-        try {
-            color = context.resources.getColor(com.example.reviva.R.color.white, null)
-        } catch (e: Exception) {
-            color = 0xFFFFFFFF.toInt()
-        }
+        color = context.getColor(com.example.reviva.R.color.white)
     }
+
 
     private var boxes: List<Box> = emptyList()
     private val rectBuffer = ArrayList<RectF>(16)

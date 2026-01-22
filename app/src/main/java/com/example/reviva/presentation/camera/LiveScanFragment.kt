@@ -17,9 +17,10 @@ import com.example.reviva.presentation.camera.state.ScanFlowViewModel
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import androidx.navigation.fragment.findNavController
+import androidx.camera.core.resolutionselector.ResolutionSelector
+import androidx.camera.core.resolutionselector.ResolutionStrategy
 
 
-@androidx.annotation.OptIn(androidx.camera.core.ExperimentalGetImage::class)
 class LiveScanFragment : Fragment(R.layout.frag_livescan) {
 
     private val scanViewModel: ScanFlowViewModel
@@ -72,19 +73,28 @@ class LiveScanFragment : Fragment(R.layout.frag_livescan) {
     @SuppressLint("UnsafeOptInUsageError")
     private fun bindCameraUseCases(cameraProvider: ProcessCameraProvider) {
 
-        val rotation = previewView.display?.rotation
-            ?: Surface.ROTATION_0
+        val rotation = previewView.display?.rotation ?: Surface.ROTATION_0
+
+        val resolutionSelector = ResolutionSelector.Builder()
+            .setResolutionStrategy(
+                ResolutionStrategy(
+                    Size(1920, 1080),
+                    ResolutionStrategy.FALLBACK_RULE_CLOSEST_HIGHER_THEN_LOWER
+                )
+            )
+            .build()
 
         val preview = Preview.Builder()
-            .setTargetResolution(Size(1920, 1080))
+            .setResolutionSelector(resolutionSelector)
             .setTargetRotation(rotation)
             .build()
 
         val imageAnalysis = ImageAnalysis.Builder()
-            .setTargetResolution(Size(1920, 1080))
+            .setResolutionSelector(resolutionSelector)
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_YUV_420_888)
             .build()
+
 
         imageAnalysis.setAnalyzer(analysisExecutor) { imageProxy ->
             try {
