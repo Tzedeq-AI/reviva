@@ -56,5 +56,17 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.57.1")
     ksp("com.google.dagger:hilt-android-compiler:2.57.1")
     implementation("androidx.hilt:hilt-navigation-fragment:1.2.0")
+    // CameraX (use BOM to keep versions aligned)
+    val camerax = "1.5.2"
+    implementation("androidx.camera:camera-core:$camerax")
+    implementation("androidx.camera:camera-camera2:$camerax")
+    implementation("androidx.camera:camera-lifecycle:$camerax")
+    implementation("androidx.camera:camera-view:$camerax")
+    implementation("androidx.camera:camera-extensions:$camerax")
+
+
+    // Coroutines for off-main-thread processing
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
 
 }
