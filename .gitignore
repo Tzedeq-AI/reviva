@@ -31,3 +31,15 @@ Thumbs.db
 *.keystore
 
 copier.py
+
+*/.venv/
+
+ml/dataset/background/*.jpg
+ml/dataset/background/*.jpeg
+ml/dataset/fg_pictures/*.jpg
+ml/dataset/yolo_dataset
+ml
+ml/models/**/*.pt
+ml/models/**/*.onnx
+ml/models/**/*.engine
+
