@@ -63,8 +63,9 @@ dependencies {
     implementation("androidx.camera:camera-lifecycle:$camerax")
     implementation("androidx.camera:camera-view:$camerax")
     implementation("androidx.camera:camera-extensions:$camerax")
-
-
+    implementation("org.opencv:opencv:4.9.0")
+    implementation("org.tensorflow:tensorflow-lite:2.17.0")
+    implementation("org.tensorflow:tensorflow-lite-gpu:2.17.0")
     // Coroutines for off-main-thread processing
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
